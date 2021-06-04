@@ -1,4 +1,4 @@
-package com.middleware.dto;
+package com.middleware.openweatherapp.dto;
 
 import java.io.Serializable;
 

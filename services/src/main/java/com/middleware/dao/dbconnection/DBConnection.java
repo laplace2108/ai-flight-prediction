@@ -3,7 +3,7 @@ package com.middleware.dao.dbconnection;
 import java.io.IOException;
 
 import com.google.gson.Gson;
-import com.middleware.dto.CityWeather;
+import com.middleware.openweatherapp.dto.CityWeather;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
