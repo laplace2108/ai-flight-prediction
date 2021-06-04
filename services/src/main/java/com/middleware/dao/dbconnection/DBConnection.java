@@ -1,15 +1,9 @@
 package com.middleware.dao.dbconnection;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.Document;
 
 import com.google.gson.Gson;
 import com.middleware.dto.CityWeather;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -27,13 +21,11 @@ public class DBConnection {
 //		}
 		
 		getWeatherCityData("New York");
-
 	}
 	
 	
-	static CityWeather getWeatherCityData(String city) {
+	static void getWeatherCityData(String city) {
 		OkHttpClient client = new OkHttpClient();
-		CityWeather cityWeather = new CityWeather();
 
 		Request request = new Request.Builder()
 			.url(API_WEATHER_DOMAIN + "find?q=" + city + "&cnt=1&type=accurate")
@@ -48,12 +40,13 @@ public class DBConnection {
 			
 			Gson gson = new Gson();
 			
-			cityWeather = gson.fromJson(responseBody.string(), CityWeather.class);
+			CityWeather cityWeather = gson.fromJson(responseBody.string(), CityWeather.class);
+			
+			System.out.println(cityWeather.toString());
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return cityWeather;
 	}
 }

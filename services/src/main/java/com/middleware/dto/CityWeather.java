@@ -1,89 +1,102 @@
 package com.middleware.dto;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-public class CityWeather implements Serializable {
+public class CityWeather {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	@SerializedName("message")
+	@Expose
+	private String message;
+	@SerializedName("cod")
+	@Expose
+	private String cod;
+	@SerializedName("count")
+	@Expose
+	private long count;
+	@SerializedName("list")
+	@Expose
+	private java.util.List<com.middleware.dto.List> list = null;
 	
-	private String id;
-	private String name;
-	private Coordinates coord;
-	private MainParameters main;
-	private Date dt;
-	private Wind wind;
-	private String rain;
-	private String snow;
-	private WeatherSummary weather;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Coordinates getCoord() {
-		return coord;
-	}
-	public void setCoord(Coordinates coord) {
-		this.coord = coord;
-	}
-	public MainParameters getMain() {
-		return main;
-	}
-	public void setMain(MainParameters main) {
-		this.main = main;
-	}
-	public Date getDt() {
-		return dt;
-	}
-	public void setDt(Date dt) {
-		this.dt = dt;
-	}
-	public Wind getWind() {
-		return wind;
-	}
-	public void setWind(Wind wind) {
-		this.wind = wind;
-	}
-	public String getRain() {
-		return rain;
-	}
-	public void setRain(String rain) {
-		this.rain = rain;
-	}
-	public String getSnow() {
-		return snow;
-	}
-	public void setSnow(String snow) {
-		this.snow = snow;
-	}
-	public WeatherSummary getWeather() {
-		return weather;
-	}
-	public void setWeather(WeatherSummary weather) {
-		this.weather = weather;
+	public String getMessage() {
+		return message;
 	}
 	
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	
-	/**
-	 * Implement the toString method
-	 * @return 
-	 * */
+	public CityWeather withMessage(String message) {
+		this.message = message;
+	return this;
+	}
+	
+	public String getCod() {
+		return cod;
+	}
+	
+	public void setCod(String cod) {
+		this.cod = cod;
+	}
+	
+	public CityWeather withCod(String cod) {
+		this.cod = cod;
+		return this;
+	}
+	
+	public long getCount() {
+		return count;
+	}
+	
+	public void setCount(long count) {
+		this.count = count;
+	}
+	
+	public CityWeather withCount(long count) {
+		this.count = count;
+	return this;
+	}
+	
+	public java.util.List<com.middleware.dto.List> getList() {
+		return list;
+	}
+	
+	public void setList(java.util.List<com.middleware.dto.List> list) {
+		this.list = list;
+	}
+	
+	public CityWeather withList(java.util.List<com.middleware.dto.List> list) {
+		this.list = list;
+		return this;
+	}
 	
 	@Override
 	public String toString() {
-		return null;
-	}
-	
-	
+		StringBuilder sb = new StringBuilder();
+		sb.append(CityWeather.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+		sb.append("message");
+		sb.append('=');
+		sb.append(((this.message == null)?"<null>":this.message));
+		sb.append(',');
+		sb.append("cod");
+		sb.append('=');
+		sb.append(((this.cod == null)?"<null>":this.cod));
+		sb.append(',');
+		sb.append("count");
+		sb.append('=');
+		sb.append(this.count);
+		sb.append(',');
+		sb.append("list");
+		sb.append('=');
+		sb.append(((this.list == null)?"<null>":this.list));
+		sb.append(',');
+		
+		if (sb.charAt((sb.length()- 1)) == ',') {
+			sb.setCharAt((sb.length()- 1), ']');
+		} else {
+			sb.append(']');
+		}
+			return sb.toString();
+		}
+
 }
