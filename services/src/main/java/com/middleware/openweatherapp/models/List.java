@@ -1,4 +1,4 @@
-package com.middleware.openweatherapp.dto;
+package com.middleware.openweatherapp.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

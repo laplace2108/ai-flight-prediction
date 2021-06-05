@@ -1,4 +1,4 @@
-package com.middleware.openweatherapp.dto;
+package com.middleware.openweatherapp.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -16,7 +16,7 @@ public class CityWeather {
 	private long count;
 	@SerializedName("list")
 	@Expose
-	private java.util.List<com.middleware.openweatherapp.dto.List> list = null;
+	private java.util.List<com.middleware.openweatherapp.models.List> list = null;
 	
 	public String getMessage() {
 		return message;
@@ -57,15 +57,15 @@ public class CityWeather {
 	return this;
 	}
 	
-	public java.util.List<com.middleware.openweatherapp.dto.List> getList() {
+	public java.util.List<com.middleware.openweatherapp.models.List> getList() {
 		return list;
 	}
 	
-	public void setList(java.util.List<com.middleware.openweatherapp.dto.List> list) {
+	public void setList(java.util.List<com.middleware.openweatherapp.models.List> list) {
 		this.list = list;
 	}
 	
-	public CityWeather withList(java.util.List<com.middleware.openweatherapp.dto.List> list) {
+	public CityWeather withList(java.util.List<com.middleware.openweatherapp.models.List> list) {
 		this.list = list;
 		return this;
 	}
