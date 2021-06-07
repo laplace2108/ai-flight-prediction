@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.bson.Document;
 
 import com.google.gson.Gson;
-import com.middleware.openweatherapp.models.CityWeather;
+import com.middleware.nationalweatherservices.station.observation.models.StationWeather;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -18,32 +18,33 @@ import com.squareup.okhttp.ResponseBody;
 public class DBConnection {
 	
 	private static final String MONGODB_URI = "mongodb+srv://yplasencia:Yosdel123@fligth-data-store.q1tow.mongodb.net/test?retryWrites=true&w=majority";
-	private static final String API_WEATHER_DOMAIN = "https://community-open-weather-map.p.rapidapi.com/";
+	private static final String API_WEATHER_DOMAIN = "https://api.weather.gov";
 	private static final String DATA_BASE = "fligth-data-store";
 	private static final String CITY_WEATHER_CONDITIONS_COLLECTION = "city-weather-conditions";
+	private static final String[] PRINCIPAL_STATIONS = {"KLGA", "KIAH", "KLAX", "KATL", "KJFK", "KSFO", "KORD", "KDFW", "KDEN"};
 	
 	public static void main(String[] args) {
 		
-		insertCityWeatherData(getWeatherCityData("Florida"));
+		for (String station : PRINCIPAL_STATIONS) {
+			insertCityWeatherData(getWeatherCityData(station));
+		}
 	}
 	
 	
 	
 	/**
-	 * Method for consuming the api Open Weather Map
-	 * The endpoint specifically retrieve the wether data for a specific city.
-	 * In case yo want to consult the weather for an specific location you must have to specify
-	 * the coordinates.
+	 * Method for consuming the national weather service api
+	 * specifically the endpoint /stations/{stationId}/observations
+	 * that give us the weather observation for an specyfic airport station
 	 * */
-	static CityWeather getWeatherCityData(String city) {
+	static StationWeather getWeatherCityData(String stationId) {
 		OkHttpClient client = new OkHttpClient();
-		CityWeather cityWeather = new CityWeather();
+		StationWeather stationWeather = new StationWeather();
 
 		Request request = new Request.Builder()
-			.url(API_WEATHER_DOMAIN + "find?q=" + city + "&cnt=1&type=accurate")
+			.url(API_WEATHER_DOMAIN + "/stations/" + stationId + "/observations?limit=1")
 			.get()
-			.addHeader("x-rapidapi-key", "77e6b227aemsh2b1c008dda3228fp10b4fajsn2ec8446155da")
-			.addHeader("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
+			.addHeader("Accept", "application/json")
 			.build();
 
 		try {
@@ -52,15 +53,16 @@ public class DBConnection {
 			
 			Gson gson = new Gson();
 			
-			cityWeather = gson.fromJson(responseBody.string(), CityWeather.class);
+			stationWeather = gson.fromJson(responseBody.string(), StationWeather.class);
 			
-			System.out.println(cityWeather.toString());
+			System.out.println(stationWeather.toString());
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return cityWeather;
+		return stationWeather;
+		
 	}
 	
 	
@@ -70,7 +72,7 @@ public class DBConnection {
 	 * of the city weather, the city needs to be specified in the method getWeatherCityData
 	 * */
 	
-	static void insertCityWeatherData(CityWeather cityWeather) {
+	static void insertCityWeatherData(StationWeather stationWeather) {
 		
 		try(MongoClient mongoClient = MongoClients.create(MONGODB_URI)) {
 			
@@ -80,7 +82,7 @@ public class DBConnection {
 			
 			Gson gson = new Gson();
 			
-			Document document = Document.parse(gson.toJson(cityWeather));
+			Document document = Document.parse(gson.toJson(stationWeather));
 			
 			collection.insertOne(document);
 			
