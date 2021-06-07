@@ -24,7 +24,7 @@ public class DBConnection {
 	
 	public static void main(String[] args) {
 		
-		insertCityWeatherData(getWeatherCityData("California"));
+		insertCityWeatherData(getWeatherCityData("Florida"));
 	}
 	
 	
