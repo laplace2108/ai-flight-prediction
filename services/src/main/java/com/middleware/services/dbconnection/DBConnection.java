@@ -20,7 +20,7 @@ public class DBConnection {
 	private static final String MONGODB_URI = "mongodb+srv://yplasencia:Yosdel123@fligth-data-store.q1tow.mongodb.net/test?retryWrites=true&w=majority";
 	private static final String API_WEATHER_DOMAIN = "https://api.weather.gov";
 	private static final String DATA_BASE = "fligth-data-store";
-	private static final String CITY_WEATHER_CONDITIONS_COLLECTION = "city-weather-conditions";
+	private static final String CITY_WEATHER_CONDITIONS_COLLECTION = "stations-weather-conditions";
 	private static final String[] PRINCIPAL_STATIONS = {"KLGA", "KIAH", "KLAX", "KATL", "KJFK", "KSFO", "KORD", "KDFW", "KDEN"};
 	
 	public static void main(String[] args) {
