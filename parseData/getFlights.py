@@ -45,7 +45,7 @@ import pandas as pd
 from pymongo import MongoClient
 import dns
 
-client = MongoClient('mongodb+srv://jtoledo:Javier123@fligth-data-store.q1tow.mongodb.net/fligth-data-store?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://<user>:<pwd>@fligth-data-store.q1tow.mongodb.net/fligth-data-store?retryWrites=true&w=majority')
 db = client['fligth-data-store']
 col = db["stations-weather-conditions"]#client.database_names()
 
