@@ -3,13 +3,13 @@ from pymongo import MongoClient
 from datetime import datetime
 import os
 import json
-from MyProject.tokens import dict
+from MyProject.tokens import tokens
 
 class getMongoDB(object):
 	def __init__(self, MAX=3):
 		self.dt = str(datetime.now()).split(' ')[0]
 		self.pathToDump = 'temp-' + self.dt
-		client = MongoClient(f'mongodb+srv://{dict["username"]}:{dict["pwd"]}@fligth-data-store.q1tow.mongodb.net/fligth-data-store?retryWrites=true&w=majority')
+		client = MongoClient(f'mongodb+srv://{tokens["username"]}:{tokens["pwd"]}@fligth-data-store.q1tow.mongodb.net/fligth-data-store?retryWrites=true&w=majority')
 		db = client['fligth-data-store']
 		col = db["stations-weather-conditions"]
 		agent_ids = col.find().distinct('_id')
@@ -112,7 +112,7 @@ class ObsDF(getMongoDB):
 		f.close()
 
 
-os.getcwd()
+# os.getcwd()
 
 a = ObsDF()
 
