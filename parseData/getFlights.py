@@ -69,7 +69,7 @@ class getFlights(object):
 			except:
 				pass
 
-getFlights()
+# getFlights()
 
 if __name__ == '__main__':
 	getFlights()
