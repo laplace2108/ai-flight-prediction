@@ -4,6 +4,7 @@ from datetime import datetime
 import os
 import json
 from MyProject.tokens import tokens
+# from datetime import datetime
 
 class getMongoDB(object):
 	def __init__(self, MAX=3):
@@ -14,10 +15,14 @@ class getMongoDB(object):
 		col = db["stations-weather-conditions"]
 		agent_ids = col.find().distinct('_id')
 		self.weather = []
+		i = 0
 		for ag in agent_ids:
 			# print(ag)
 			# self.weather = self.weather + next(iter(col.find({'_id': ag})))
 			self.weather.append(next(iter(col.find({'_id': ag}))))
+			i += 1
+			if i == 100:
+				break
 
 
 class ObsDF(getMongoDB):
@@ -112,9 +117,9 @@ class ObsDF(getMongoDB):
 		f.close()
 
 
+a = getMongoDB()
 # os.getcwd()
 
-a = ObsDF()
 
 
 if __name__ == '__main__':
