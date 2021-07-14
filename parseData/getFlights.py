@@ -5,6 +5,9 @@ from MyProject.tokens import tokens
 fr_api = FlightRadar24API()
 flights = fr_api.get_flights()
 
+from noaa_sdk import NOAA
+n = NOAA()
+
 airports = {'LaGuardia': 'lga',
 	'Texas H Int Airport': 'iah',
 	'LAX': 'lax',
@@ -14,6 +17,16 @@ airports = {'LaGuardia': 'lga',
 	'Chicago':'ord',
 	'Dallas':'dfw',
 	'Denver':'den'}
+
+airportsPC = {'LaGuardia': '11371',
+	'Texas H Int Airport': '77032',
+	'LAX': '90045',
+	'Atlanta':'30320',
+	'NY JFK':'11430',
+	'San Francisco':'94128',
+	'Chicago':'60666',
+	'Dallas':'75261',
+	'Denver':'80249'}
 
 
 # getJson(flight.id)
@@ -69,10 +82,36 @@ class getFlights(object):
 			except:
 				pass
 
+
+class getWeather(object):
+	def __init__(self):
+		self.obsList = []
+		self.getWeather()
+		self.pushFlights()
+
+	def getWeather(self):
+		for (i,postalCode) in enumerate(airportsPC.values()):
+			observations = n.get_observations(postalCode,'US')
+			for observation in observations:
+				self.obsList.append(observation)
+			if i > 3:
+				break
+
+	def pushFlights(self):
+		db = client['fligth-data-store']
+		col = db["weather-data"]
+		for obs in self.obsList:
+			try:
+				col.insert_one(obs)
+			except:
+				pass
+
 # getFlights()
+# getWeather()
 
 if __name__ == '__main__':
 	getFlights()
+	getWeather()
 
 # flightDetails = getFlightDetails([flights[i].id for i in range(len(flights))])
 
@@ -118,21 +157,43 @@ if __name__ == '__main__':
 # bb = requests.get('https://data-live.flightradar24.com/zones/fcgi/feed.js')
 # bb
 ################################
-# from noaa_sdk import NOAA
-# n = NOAA()
-# observations = n.get_observations('11365','US')
+# 11365
+# airportsPC
+
+# observations = n.get_observations(airportsPC["Denver"],'US')
 # obsList = []
 # for observation in observations:
 # 	# print(observation)
 # 	obsList.append(observation)
+
+
+
+# class getWeather(object):
+# 	def __init__(self):
+# 		self.obsList = []
+# 		self.getWeather()
+# 		self.pushFlights()
 #
+# 	def getWeather(self):
+# 		for postalCode in airportsPC.values():
+# 			observations = n.get_observations(postalCode,'US')
+# 			for observation in observations:
+# 				self.obsList.append(observation)
 #
-# iter(observations)
-# type(observation)
+# 	def pushFlights(self):
+# 		db = client['fligth-data-store']
+# 		col = db["weather-data"]
+# 		for obs in obsList:
+# 			try:
+# 				col.insert_one(obs)
+# 			except:
+# 				pass
+
+
+
 # type(observations)
-# [obsList[i]["timestamp"] for i in range(272)]
-# len(obsList)
-# obsList[0]
+# [obsList[i]["timestamp"] for i in range(606)]
+
 #
 # ######################################
 # import pandas as pd
