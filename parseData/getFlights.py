@@ -1,11 +1,12 @@
 from FlightRadar24.api import FlightRadar24API
 from pymongo import MongoClient
-from MyProject.tokens import tokens
+# from MyProject.tokens import tokens
 
 fr_api = FlightRadar24API()
 flights = fr_api.get_flights()
 
-client = MongoClient(f'mongodb+srv://{tokens["username"]}:{tokens["pwd"]}@fligth-data-store.q1tow.mongodb.net/fligth-data-store?retryWrites=true&w=majority')
+# client = MongoClient(f'mongodb+srv://{tokens["username"]}:{tokens["pwd"]}@fligth-data-store.q1tow.mongodb.net/fligth-data-store?retryWrites=true&w=majority')
+client = MongoClient(f'mongodb+srv://{"jtoledo"}:{"Javier123"}@fligth-data-store.q1tow.mongodb.net/fligth-data-store?retryWrites=true&w=majority')
 
 from noaa_sdk import NOAA
 n = NOAA()
@@ -112,8 +113,11 @@ getFlights()
 # getWeather()
 
 if __name__ == '__main__':
-	getFlights()
-	getWeather()
+	while True:
+		getFlights()
+		# getWeather()
+		sleep(3600)
+		flights = fr_api.get_flights()
 
 # flightDetails = getFlightDetails([flights[i].id for i in range(len(flights))])
 
