@@ -5,6 +5,8 @@ from MyProject.tokens import tokens
 fr_api = FlightRadar24API()
 flights = fr_api.get_flights()
 
+client = MongoClient(f'mongodb+srv://{tokens["username"]}:{tokens["pwd"]}@fligth-data-store.q1tow.mongodb.net/fligth-data-store?retryWrites=true&w=majority')
+
 from noaa_sdk import NOAA
 n = NOAA()
 
@@ -106,7 +108,7 @@ class getWeather(object):
 			except:
 				pass
 
-# getFlights()
+getFlights()
 # getWeather()
 
 if __name__ == '__main__':
